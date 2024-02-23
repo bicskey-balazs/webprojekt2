@@ -329,3 +329,192 @@ function KnLep(index, szin){
     BastyaLep(index,szin);
     FutoLep(index,szin);
 }
+
+function KiralyLep(index, szin){
+    if(szin == kiLep){
+        document.querySelector(`#s${index}`).addEventListener('click', () => {
+            megseGomb.style.display = "inline";
+            lepesVan = true;
+            let segedLista = [index - 8, index - 9, index - 10, index - 2, index, index + 6, index + 7, index + 8];
+            let segedLista2 = [index > 8 && index % 8 != 0, index > 8, index > 8 && (index + 7) % 8 != 0, index > 1 && index % 8 != 0, (index + 7) % 8 != 0, index < 57 && index % 8 != 0, index < 57, index < 57 && (index + 7) % 8 != 0];
+            for (let i = 0; i < 9; i++) {
+                if(segedLista2[i]){
+                    if((tabla[segedLista[i]].includes("2") && szin == "feh")||(tabla[segedLista[i]].includes("1") && szin == "fek")){
+                        document.querySelector(`#s${segedLista[i] + 1}`).classList.add("utes");
+                        document.querySelector(`#s${segedLista[i] + 1}`).addEventListener('click', () => {
+                            LepesSeged(index, segedLista[i] + 1);
+                        });
+                    }
+                    else if(tabla[segedLista[i]] == "0"){
+                        document.querySelector(`#s${segedLista[i] + 1}`).classList.add("lepes");
+                        document.querySelector(`#s${segedLista[i] + 1}`).addEventListener('click', () => {
+                            LepesSeged(index, segedLista[i] + 1);
+                        });
+                    }
+                }
+            }
+        });
+    }
+}
+
+function ParasztCheck(index, szin){
+    if(szin == "fek"){
+        if(index > 8){
+            if((index + 7) % 8 != 0){
+                document.querySelector(`#s${index - 9}`).classList.add("sakkCheck");
+                if(tabla[index - 10] == "k2") return true;
+            }
+            if(index % 8 != 0){
+                document.querySelector(`#s${index - 7}`).classList.add("sakkCheck");
+                if(tabla[index - 8] == "k2") return true;
+            }
+        }
+    }
+    if(szin == "feh"){
+        if(index < 57){
+            if(index % 8 != 0){
+                document.querySelector(`#s${index + 9}`).classList.add("sakkCheck");
+                if(tabla[index + 8] == "k1") return true;
+            }
+            if((index + 7) % 8 != 0){
+                document.querySelector(`#s${index + 7}`).classList.add("sakkCheck");
+                if(tabla[index + 6] == "k1") return true;
+            }
+        }
+    }
+    return false;
+}
+
+function BastyaCheck(index, szin){
+    if(szin == kiLep){
+        document.querySelector(`#s${index}`).addEventListener('click', () => {
+            if(!lepesVan){
+                megseGomb.style.display = "inline";
+                lepesVan = true;
+                let seged = 1;
+                let segedLista1 = [true, true, true, true];
+                for (let i = 0; i < 4; i++) {
+                    while(segedLista1[i]){
+                        let segedLista2 = [(index-1) - (seged*8), (index-1) + (seged*8), (index-1) - (seged), (index-1) + (seged)];
+                        let segedLista3 = [segedLista2[0] < 0, segedLista2[1] > 63, (segedLista2[2]+1) % 8 == 0, (segedLista2[3]+8) % 8 == 0];
+                        if(segedLista3[i]) segedLista1[i] = false;
+                        else if(tabla[segedLista2[i]] == "0"){
+                            document.querySelector(`#s${segedLista2[i] + 1}`).classList.add("lepes");
+                            document.querySelector(`#s${segedLista2[i] + 1}`).addEventListener('click', () => {
+                                LepesSeged(index, segedLista2[i] + 1);
+                            });
+                        }
+                        else if((tabla[segedLista2[i]].includes("2") && szin == "feh")||(tabla[segedLista2[i]].includes("1") && szin == "fek")){
+                            document.querySelector(`#s${segedLista2[i] + 1}`).classList.add("utes");
+                            document.querySelector(`#s${segedLista2[i] + 1}`).addEventListener('click', () => {
+                                LepesSeged(index, segedLista2[i] + 1);
+                            });
+                            segedLista1[i] = false;
+                        }
+                        else segedLista1[i] = false;
+                        seged++;
+                    }
+                    seged = 1;
+                }
+            }
+        });
+    }
+}
+
+function LoCheck(index, szin){
+    if(szin == kiLep){
+        document.querySelector(`#s${index}`).addEventListener('click', () => {
+            if(!lepesVan){
+                megseGomb.style.display = "inline";
+                lepesVan = true;
+                let segedLista1 = [index > 17 && (index + 7) % 8 != 0, index > 16 && index % 8 != 0, index > 10 && (index + 6) % 8 != 0 && (index + 7) % 8 != 0, index > 8 && index % 8 != 0 && (index + 1) % 8 != 0, index < 48 && index % 8 != 0, index < 49 && (index + 7) % 8 != 0, index < 57 && index % 8 != 0 && (index + 1) % 8 != 0, index < 57 && (index + 6) % 8 != 0 && (index + 7) % 8 != 0];
+                let segedLista2 = [index - 17, index - 15, index - 10, index - 6, index + 17, index + 15, index + 10, index + 6];
+                for(let i = 0; i < 8; i++){
+                    if(segedLista1[i]){
+                        if((tabla[segedLista2[i]-1].includes("2") && szin == "feh")||(tabla[segedLista2[i]-1].includes("1") && szin == "fek")){
+                            document.querySelector(`#s${segedLista2[i]}`).classList.add("utes");
+                            document.querySelector(`#s${segedLista2[i]}`).addEventListener('click', () => {
+                                LepesSeged(index, segedLista2[i]);
+                            });
+                        }
+                        else if(tabla[segedLista2[i]-1] == "0"){
+                            document.querySelector(`#s${segedLista2[i]}`).classList.add("lepes");
+                            document.querySelector(`#s${segedLista2[i]}`).addEventListener('click', () => {
+                                LepesSeged(index, segedLista2[i]);
+                            });
+                        }
+                    }
+                }
+            }
+        });
+    }
+}
+
+function FutoCheck(index, szin){
+    if(szin == kiLep){
+        document.querySelector(`#s${index}`).addEventListener('click', () => {
+            megseGomb.style.display = "inline";
+            lepesVan = true;
+            let seged = 1;
+            let segedLista1 = [true, true, true, true];
+            //1
+            for (let i = 0; i < 4; i++) {
+                while(segedLista1[i]){
+                    let segedLista2 = [(index-1) - (seged*9),(index-1) - (seged*7),(index-1) + (seged*9),(index-1) + (seged*7)];
+                    let segedLista3 = [segedLista2[i] < 0 || (segedLista2[i] + 1) % 8 == 0,segedLista2[i] < 0 || (segedLista2[i] + 8) % 8 == 0,segedLista2[i] > 63 || (segedLista2[i] + 8) % 8 == 0,segedLista2[i] < 0 || (segedLista2[i] + 1) % 8 == 0];
+                    if(segedLista3[i]) segedLista1[i] = false;
+                    else if(tabla[segedLista2[i]] == "0"){
+                        document.querySelector(`#s${segedLista2[i] + 1}`).classList.add("lepes");
+                        document.querySelector(`#s${segedLista2[i] + 1}`).addEventListener('click', () => {
+                            LepesSeged(index, segedLista2[i] + 1);
+                        });
+                    }
+                    else if((tabla[segedLista2[i]].includes("2") && szin == "feh")||(tabla[segedLista2[i]].includes("1") && szin == "fek")){
+                        document.querySelector(`#s${segedLista2[i] + 1}`).classList.add("utes");
+                        document.querySelector(`#s${segedLista2[i] + 1}`).addEventListener('click', () => {
+                            LepesSeged(index, segedLista2[i] + 1);
+                        });
+                        segedLista1[i] = false;
+                    }
+                    else segedLista1[i] = false;
+                    seged++;
+                }
+                seged = 1;
+            }
+        });
+    }
+}
+
+function KnCheck(index, szin){
+    BastyaCheck(index,szin);
+    FutoCheck(index,szin);
+}
+
+function KiralyCheck(index, szin){
+    if(szin == kiLep){
+        document.querySelector(`#s${index}`).addEventListener('click', () => {
+            megseGomb.style.display = "inline";
+            lepesVan = true;
+            let segedLista = [index - 8, index - 9, index - 10, index - 2, index, index + 6, index + 7, index + 8];
+            let segedLista2 = [index > 8 && index % 8 != 0, index > 8, index > 8 && (index + 7) % 8 != 0, index > 1 && index % 8 != 0, (index + 7) % 8 != 0, index < 57 && index % 8 != 0, index < 57, index < 57 && (index + 7) % 8 != 0];
+            for (let i = 0; i < 9; i++) {
+                if(segedLista2[i]){
+                    if((tabla[segedLista[i]].includes("2") && szin == "feh")||(tabla[segedLista[i]].includes("1") && szin == "fek")){
+                        document.querySelector(`#s${segedLista[i] + 1}`).classList.add("utes");
+                        document.querySelector(`#s${segedLista[i] + 1}`).addEventListener('click', () => {
+                            LepesSeged(index, segedLista[i] + 1);
+                        });
+                    }
+                    else if(tabla[segedLista[i]] == "0"){
+                        document.querySelector(`#s${segedLista[i] + 1}`).classList.add("lepes");
+                        document.querySelector(`#s${segedLista[i] + 1}`).addEventListener('click', () => {
+                            LepesSeged(index, segedLista[i] + 1);
+                        });
+                    }
+                }
+            }
+        });
+    }
+}
+
+TablaCsinal();

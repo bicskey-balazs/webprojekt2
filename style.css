@@ -1,0 +1,47 @@
+.square {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    font-size: 80px;
+    text-shadow: 0px 0px 5px white;
+}
+
+.cim{
+    text-align: center;
+}
+
+.grid {
+    width: 800px;
+    height: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-content: center;
+    border: 20px solid black;
+}
+
+
+.fekete{
+    background-color: black;
+}
+
+.feher{
+    background-color: white;
+}
+
+.lepes{
+    background-image: radial-gradient(rgb(102, 203, 237), transparent);
+}
+
+.utes{
+    background-image: radial-gradient(tomato, transparent);
+}
+
+.megseGomb{
+    background-color: tomato;
+}
+
+.sakkCheck{
+    background-color: yellow;
+}
